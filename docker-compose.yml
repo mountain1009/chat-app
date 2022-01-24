@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    build:
+      context: ./.docker/mysql
+      dockerfile: Dockerfile
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./init/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+  mail-server:
+    image: catatnight/postfix
+    ports:
+      - 25:25
+    environment:
+      maildomain: mail.example.com
+      smtp_user: user:pwd
+
+volumes:
+  db-data:
