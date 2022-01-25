@@ -1,9 +1,10 @@
-import styled, {
+import {
   css,
   CSSObject,
   FlattenSimpleInterpolation,
   SimpleInterpolation,
 } from 'styled-components'
+
 import { MEDIA } from '~/libs/constant'
 
 export const sp = (

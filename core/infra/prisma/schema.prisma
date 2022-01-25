@@ -17,6 +17,12 @@ model Animal {
     @@map(name: "animals")
 }
 
+model User {
+    uuid   String  @unique
+    animalId   String @map(name: "animal_id")
+    @@map(name: "users")
+}
+
 // Polymorphicでの実装がしたいーーーー
 // MEMO: https://github.com/prisma/prisma/issues/1644
 //model Character {

@@ -1,21 +1,21 @@
-import { useUser } from '@auth0/nextjs-auth0'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useUser } from '@auth0/nextjs-auth0'
 
 const Brand = styled.a`
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
+  color: white;
 `
 
 const SiteHeader = styled.header`
-  background-color: #def7ff;
+  background-color: #5c7cfa;
   margin-bottom: 10px;
 `
 
 const SiteHeaderWrapper = styled.div`
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -25,37 +25,34 @@ const SiteHeaderWrapper = styled.div`
 
 const NavWrapper = styled.ul`
   list-style: none;
-  cursor: pointer;
+  display: flex;
 `
 
 const StyledLink = styled.a`
   display: block;
+  cursor: pointer;
   padding: 1.5rem 1rem;
+  color: white;
 `
 
 const Header = () => {
   const { user } = useUser()
 
-  // let component = <LoginButton href="/api/auth/login">Login</LoginButton>
-  // if (user) {
-  //   component = (
-  //     <UserNav>
-  //       <CircleImage
-  //         src={String(user.picture ?? '')}
-  //         alt={String(user.name || '')}
-  //       />
-  //       <LogoutButton href="/api/auth/logout" className="text-white">
-  //         ログアウト
-  //       </LogoutButton>
-  //     </UserNav>
-  //   )
-  // }
+  const component = user ? (
+    <Link href="/api/auth/logout">
+      <StyledLink>ログアウト</StyledLink>
+    </Link>
+  ) : (
+    <Link href="/api/auth/login">
+      <StyledLink>ログイン</StyledLink>
+    </Link>
+  )
 
   return (
     <SiteHeader>
       <SiteHeaderWrapper>
         <Link href="/">
-          <Brand>Brand</Brand>
+          <Brand>Animal掲示板</Brand>
         </Link>
         <nav>
           <NavWrapper>
@@ -64,6 +61,7 @@ const Header = () => {
                 <StyledLink>About</StyledLink>
               </Link>
             </li>
+            <li>{component}</li>
           </NavWrapper>
         </nav>
       </SiteHeaderWrapper>

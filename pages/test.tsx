@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Script from 'next/script'
 
-import VantaTemplate from '../components/templates/VantaTemplate'
 const Home: NextPage = () => {
   return (
     <>
@@ -17,7 +16,6 @@ const Home: NextPage = () => {
         </header>
         <main>
           <p>hoghoge</p>
-          <VantaTemplate />
         </main>
         <footer />
       </div>

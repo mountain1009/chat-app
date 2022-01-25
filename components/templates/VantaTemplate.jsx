@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import NET from 'vanta/dist/vanta.net.min'
+import NET from 'vanta/dist/vanta.halo.min'
+import styled from 'styled-components'
+
+const BackGround = styled.div`
+  position: relative;
+  width: 100%;
+`
 
 const VantaTemplate = ({ children }) => {
   const [vantaEffect, setVantaEffect] = useState(0)
@@ -11,6 +17,11 @@ const VantaTemplate = ({ children }) => {
         NET({
           el: vantaRef.current,
           THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
         }),
       )
     }
@@ -18,7 +29,7 @@ const VantaTemplate = ({ children }) => {
       if (vantaEffect) vantaEffect.destory()
     }
   }, [vantaEffect])
-  return <div ref={vantaRef}>{children}</div>
+  return <BackGround ref={vantaRef}>{children}</BackGround>
 }
 
 export default VantaTemplate
