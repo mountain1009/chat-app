@@ -1,24 +1,20 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
-import Script from 'next/script'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const Home: NextPage = () => {
+  const { data: session } = useSession()
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user ? session.user.email : ''} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
   return (
     <>
-      <Script src="https://www.google-analytics.com/analytics.js" />
-      <div>
-        <header>
-          <ul>
-            <li>
-              <Link href="/">TOP</Link>
-            </li>
-          </ul>
-        </header>
-        <main>
-          <p>hoghoge</p>
-        </main>
-        <footer />
-      </div>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
     </>
   )
 }

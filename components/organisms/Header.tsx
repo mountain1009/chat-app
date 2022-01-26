@@ -1,16 +1,17 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { useUser } from '@auth0/nextjs-auth0'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { MAIN_COLOR, BASE_COLOR } from '~/libs/constant'
 
 const Brand = styled.a`
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
-  color: white;
+  color: ${MAIN_COLOR};
 `
 
 const SiteHeader = styled.header`
-  background-color: #5c7cfa;
+  background-color: ${BASE_COLOR};
   margin-bottom: 10px;
 `
 
@@ -35,17 +36,20 @@ const StyledLink = styled.a`
   color: white;
 `
 
-const Header = () => {
-  const { user } = useUser()
+const StyledButton = styled.button`
+  display: block;
+  cursor: pointer;
+  padding: 1.5rem 1rem;
+  color: white;
+`
 
-  const component = user ? (
-    <Link href="/api/auth/logout">
-      <StyledLink>ログアウト</StyledLink>
-    </Link>
+const Header = () => {
+  const { data: session } = useSession()
+
+  const component = session ? (
+    <StyledButton onClick={() => signOut()}>ログアウト</StyledButton>
   ) : (
-    <Link href="/api/auth/login">
-      <StyledLink>ログイン</StyledLink>
-    </Link>
+    <StyledButton onClick={() => signIn()}>ログイン</StyledButton>
   )
 
   return (

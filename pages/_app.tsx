@@ -1,13 +1,14 @@
 import 'ress'
 import GlobalStyle from '../styles/global'
 
-import { UserProvider } from '@auth0/nextjs-auth0'
+import { SessionProvider } from 'next-auth/react'
+
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import Header from '../components/organisms/Header'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
       <Head>
@@ -18,11 +19,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <UserProvider>
+      <SessionProvider session={session}>
         <GlobalStyle />
         <Header />
         <Component {...pageProps} />
-      </UserProvider>
+      </SessionProvider>
     </>
   )
 }

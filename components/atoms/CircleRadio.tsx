@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ACCENT_COLOR } from '~/libs/constant'
+
 type Props = {
   image: string
   alt: string
@@ -15,7 +17,9 @@ const Label = styled.label`
   display: block;
   border-radius: 50%;
   &:hover {
-    border: dashed gray;
+    border: 4px dashed ${ACCENT_COLOR};
+    //TODO:  border分を下げることによってちらつきをなくす
+    margin: -4px;
   }
 `
 
@@ -26,7 +30,7 @@ const Radio = styled.input`
     cursor: pointer;
   }
   &:checked + ${Label} {
-    background: gray;
+    background: ${ACCENT_COLOR};
   }
 `
 
