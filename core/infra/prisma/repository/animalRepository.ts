@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client'
-
 import Animal from '~/core/domains/animal'
+import BaseRepository from '~/core/infra/prisma/repository/base'
 import IAnimalRepository from '~/core/interface/repository/iAnimalRepository'
 
-export default class AnimalRepository implements IAnimalRepository {
-  constructor(private readonly prisma: PrismaClient) {}
-
+export default class AnimalRepository
+  extends BaseRepository
+  implements IAnimalRepository
+{
   async getAnimals() {
     return await this.prisma.animal.findMany()
   }

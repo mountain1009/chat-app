@@ -1,9 +1,12 @@
-import CircleRadioGroup from '~/components/molecules/CircleRadioGroup'
+import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AnimalsViewModel } from '~/core/presenter/animal/animalsViewModel'
 
-const _AnimalSelectSection = styled.section`
+import CircleRadioGroup from '~/components/molecules/CircleRadioGroup'
+import { AnimalsViewModel } from '~/core/presenter/animal/animalsViewModel'
+import { BaseSection } from '~/libs/baseComponets'
+
+const _AnimalSelectSection = styled(BaseSection)`
   max-width: 600px;
   margin: 0 auto;
 `
@@ -23,16 +26,29 @@ type Props = {
 
 const AnimalSelectSection = (props: Props) => {
   const { animals } = props
+  const { data: session } = useSession()
+
   const [state, setState] = useState<number | undefined>(undefined)
   const radioClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState(Number(e.target.value))
   }
 
-  const setAnimalClick = () => {
+  const setAnimalClick = async () => {
+    const animal = animals.find((_, i) => state === i)
+
+    if (!session) {
+      return alert('Step1のログインを行ってください。')
+    }
     if (state === undefined) {
       return alert('動物を選択してください。')
     }
-    console.log(animals.find((_, i) => state === i))
+    if (!animal) {
+      return alert('動物が存在しません。')
+    }
+    await fetch('/api/user/animals', {
+      method: 'PUT',
+      body: JSON.stringify({ animalId: animal.id }),
+    })
   }
   return (
     <_AnimalSelectSection>
@@ -45,15 +61,3 @@ const AnimalSelectSection = (props: Props) => {
 }
 
 export default AnimalSelectSection
-
-// export const getServerSideProps = async () => {
-//   const presenter = new AnimalsPresenter(
-//     new AnimalsInteractor(new AnimalRepository(prisma)),
-//   )
-//
-//   const animals: AnimalsViewModel[] = await presenter.execute()
-//
-//   console.log(animals)
-//
-//   return { props: { animals } }
-// }

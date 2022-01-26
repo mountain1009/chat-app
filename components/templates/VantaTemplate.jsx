@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 import * as THREE from 'three'
 import NET from 'vanta/dist/vanta.halo.min'
-import styled from 'styled-components'
 
 const BackGround = styled.div`
   position: relative;

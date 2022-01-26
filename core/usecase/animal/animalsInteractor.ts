@@ -1,4 +1,3 @@
-import Animal from '~/core/domains/animal'
 import IAnimalRepository from '~/core/interface/repository/iAnimalRepository'
 import IAnimalsUseCase from '~/core/interface/usecase/animal/iAnimalsUseCase'
 export class AnimalsInteractor implements IAnimalsUseCase {
@@ -7,7 +6,7 @@ export class AnimalsInteractor implements IAnimalsUseCase {
   constructor(repository: IAnimalRepository) {
     this.repository = repository
   }
-  async handle(): Promise<Animal[]> {
+  async handle() {
     return this.repository.getAnimals()
   }
 }

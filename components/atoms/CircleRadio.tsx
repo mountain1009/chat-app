@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import { ACCENT_COLOR } from '~/libs/constant'
 
 export type Props = {
@@ -35,14 +36,19 @@ const Radio = styled.input`
   }
   &:checked + ${Label} {
     background: ${ACCENT_COLOR};
+    img {
+    }
   }
+`
+
+const StyledImage = styled(Image)`
+  filter: drop-shadow(2px 2px 2px rgba(160, 160, 160, 0.8));
 `
 
 const CircleRadio = (props: Props) => {
   const { id, alt, image, state, onChange } = props
   return (
     <>
-      <p>{state}</p>
       <Radio
         type="radio"
         id={String(id)}
@@ -51,7 +57,7 @@ const CircleRadio = (props: Props) => {
         value={id}
       />
       <Label htmlFor={String(id)}>
-        <Image width={SIZE} height={SIZE} src={image} alt={alt} />
+        <StyledImage width={SIZE} height={SIZE} src={image} alt={alt} />
       </Label>
     </>
   )

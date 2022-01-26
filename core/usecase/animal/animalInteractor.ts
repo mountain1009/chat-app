@@ -1,4 +1,3 @@
-import Animal from '~/core/domains/animal'
 import IAnimalRepository from '~/core/interface/repository/iAnimalRepository'
 import IAnimalUseCase from '~/core/interface/usecase/animal/iAnimalUseCase'
 
@@ -9,7 +8,7 @@ export class AnimalInteractor implements IAnimalUseCase {
     this.repository = repository
   }
 
-  async handle(id: string): Promise<Animal | null> {
+  async handle(id: string) {
     return this.repository.findAnimal(id)
   }
 }

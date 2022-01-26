@@ -8,12 +8,23 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     Auth0Provider({
-      clientId: process.env.AUTH0_CLIENT_ID,
-      clientSecret: process.env.AUTH0_CLIENT_SECRET,
+      clientId: process.env.AUTH0_CLIENT_ID ?? '',
+      clientSecret: process.env.AUTH0_CLIENT_SECRET ?? '',
       issuer: process.env.AUTH0_ISSUER_BASE_URL,
     }),
   ],
   pages: {
     signIn: '/',
+  },
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub ?? ''
+      }
+      return session
+    },
+  },
+  session: {
+    strategy: 'jwt',
   },
 })
