@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { getSession } from 'next-auth/react'
 import React from 'react'
 import styled from 'styled-components'
+import Image from 'next/image'
 
 import AnimalSelectSection from '~/components/templates/AnimalSelectSection'
 import UserRepository from '~/core/infra/prisma/repository/userRepository'
@@ -18,8 +19,7 @@ import AnimalRepository from '../core/infra/prisma/repository/animalRepository'
 import AnimalsPresenter from '../core/presenter/animal/animalsPresenter'
 import { AnimalsViewModel } from '../core/presenter/animal/animalsViewModel'
 import { AnimalsInteractor } from '../core/usecase/animal/animalsInteractor'
-
-const AuthSection = styled(BaseSection)``
+import { GetServerSidePropsContext } from 'next'
 
 const AuthButton = styled.button`
   display: block;
@@ -43,9 +43,10 @@ const StepTitle = styled.h2`
 
 type Props = {
   animals: AnimalsViewModel[]
+  hasAnimal: boolean
 }
 
-const Home: NextPage<Props> = ({ animals }) => {
+const Home: NextPage<Props> = ({ animals, hasAnimal }) => {
   const { data: session } = useSession()
 
   const step1Component = session ? (
@@ -53,17 +54,44 @@ const Home: NextPage<Props> = ({ animals }) => {
   ) : (
     <>
       <StepTitle>Step1</StepTitle>
-      <AuthSection>
+      <BaseSection>
         <AuthButton onClick={() => signIn('auth0')}>ログイン</AuthButton>
-      </AuthSection>
+      </BaseSection>
     </>
   )
+
+  const step2Component = hasAnimal ? (
+    ''
+  ) : (
+    <>
+      <StepTitle>Step2</StepTitle>
+      <AnimalSelectSection animals={animals} />
+    </>
+  )
+
+  const finishComponent =
+    session && hasAnimal ? (
+      <>
+        {' '}
+        <StepTitle>Finish</StepTitle>
+        <BaseSection>
+          <Image
+            src="/images/finish.svg"
+            width={2000}
+            height={1000}
+            layout={'responsive'}
+          />
+        </BaseSection>
+      </>
+    ) : (
+      ''
+    )
   return (
     <div>
       <Container>
         {step1Component}
-        <StepTitle>Step2</StepTitle>
-        <AnimalSelectSection animals={animals} />
+        {step2Component}
+        {finishComponent}
       </Container>
     </div>
   )
@@ -71,17 +99,22 @@ const Home: NextPage<Props> = ({ animals }) => {
 
 export default Home
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
   const session = await getSession(context)
   const animals: AnimalsViewModel[] = await new AnimalsPresenter(
     new AnimalsInteractor(new AnimalRepository(prisma)),
   ).execute()
 
+  let hasAnimal = false
+
   if (session) {
     const user: UserViewModel | null = await new UserPresenter(
       new UserInteractor(new UserRepository(prisma, session?.user?.id)),
     ).execute()
+    hasAnimal = user ? !!user.animal : false
   }
 
-  return { props: { animals } }
+  return { props: { animals, hasAnimal } }
 }
