@@ -1,7 +1,8 @@
 import Link from 'next/link'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import styled from 'styled-components'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { MAIN_COLOR, BASE_COLOR } from '~/libs/constant'
+
+import { BASE_COLOR, MAIN_COLOR } from '~/libs/constant'
 
 const Brand = styled.a`
   font-weight: bold;

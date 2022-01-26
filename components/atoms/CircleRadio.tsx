@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { ACCENT_COLOR } from '~/libs/constant'
 
-type Props = {
+export type Props = {
   image: string
   alt: string
   id: number
@@ -12,7 +12,11 @@ type Props = {
 
 import Image from 'next/image'
 
+const SIZE = 200
+
 const Label = styled.label`
+  max-width: ${SIZE}px;
+  max-width: ${SIZE}px;
   cursor: pointer;
   display: block;
   border-radius: 50%;
@@ -38,6 +42,7 @@ const CircleRadio = (props: Props) => {
   const { id, alt, image, state, onChange } = props
   return (
     <>
+      <p>{state}</p>
       <Radio
         type="radio"
         id={String(id)}
@@ -46,7 +51,7 @@ const CircleRadio = (props: Props) => {
         value={id}
       />
       <Label htmlFor={String(id)}>
-        <Image width={200} height={200} src={image} alt={alt} />
+        <Image width={SIZE} height={SIZE} src={image} alt={alt} />
       </Label>
     </>
   )
