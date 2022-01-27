@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import CircleRadioGroup from '~/components/molecules/CircleRadioGroup'
 import { AnimalsViewModel } from '~/core/presenter/animal/animalsViewModel'
 import { BaseSection } from '~/libs/baseComponets'
+import { useRouter } from 'next/router'
 
 const _AnimalSelectSection = styled(BaseSection)`
   max-width: 600px;
@@ -27,6 +28,7 @@ type Props = {
 const AnimalSelectSection = (props: Props) => {
   const { animals } = props
   const { data: session } = useSession()
+  const router = useRouter()
 
   const [state, setState] = useState<number | undefined>(undefined)
   const radioClick = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +47,15 @@ const AnimalSelectSection = (props: Props) => {
     if (!animal) {
       return alert('動物が存在しません。')
     }
-    await fetch('/api/user/animals', {
-      method: 'PUT',
-      body: JSON.stringify({ animalId: animal.id }),
-    })
+    try {
+      await fetch('/api/user/animals', {
+        method: 'PUT',
+        body: JSON.stringify({ animalId: animal.id }),
+      })
+      await router.push('/chats')
+    } catch (e) {
+      alert('設定に失敗しました。')
+    }
   }
   return (
     <_AnimalSelectSection>

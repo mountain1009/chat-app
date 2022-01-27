@@ -36,8 +36,6 @@ const Radio = styled.input`
   }
   &:checked + ${Label} {
     background: ${ACCENT_COLOR};
-    img {
-    }
   }
 `
 

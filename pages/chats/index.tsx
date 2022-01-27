@@ -1,11 +1,11 @@
 import { Container } from '~/libs/baseComponets'
 
-const About = () => {
+const Chats = () => {
   return (
     <Container>
-      <div>about</div>
+      <p>掲示板</p>
     </Container>
   )
 }
 
-export default About
+export default Chats

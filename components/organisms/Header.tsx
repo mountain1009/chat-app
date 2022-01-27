@@ -19,7 +19,7 @@ const SiteHeader = styled.header`
 `
 
 const SiteHeaderWrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
