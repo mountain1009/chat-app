@@ -1,10 +1,8 @@
-import { Container } from '~/libs/baseComponets'
-
 const About = () => {
   return (
-    <Container>
+    <div>
       <div>about</div>
-    </Container>
+    </div>
   )
 }
 

@@ -1,0 +1,12 @@
+export { AggregateAnimalArgs } from "./AggregateAnimalArgs";
+export { CreateAnimalArgs } from "./CreateAnimalArgs";
+export { CreateManyAnimalArgs } from "./CreateManyAnimalArgs";
+export { DeleteAnimalArgs } from "./DeleteAnimalArgs";
+export { DeleteManyAnimalArgs } from "./DeleteManyAnimalArgs";
+export { FindFirstAnimalArgs } from "./FindFirstAnimalArgs";
+export { FindManyAnimalArgs } from "./FindManyAnimalArgs";
+export { FindUniqueAnimalArgs } from "./FindUniqueAnimalArgs";
+export { GroupByAnimalArgs } from "./GroupByAnimalArgs";
+export { UpdateAnimalArgs } from "./UpdateAnimalArgs";
+export { UpdateManyAnimalArgs } from "./UpdateManyAnimalArgs";
+export { UpsertAnimalArgs } from "./UpsertAnimalArgs";

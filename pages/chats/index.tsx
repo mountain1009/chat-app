@@ -1,10 +1,8 @@
-import { Container } from '~/libs/baseComponets'
-
 const Chats = () => {
   return (
-    <Container>
+    <div>
       <p>掲示板</p>
-    </Container>
+    </div>
   )
 }
 

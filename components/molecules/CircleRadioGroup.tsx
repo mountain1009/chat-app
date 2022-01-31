@@ -1,7 +1,6 @@
+import { RadioGroup } from '@headlessui/react'
+import Image from 'next/image'
 import React from 'react'
-import styled from 'styled-components'
-
-import CircleRadio from '../atoms/CircleRadio'
 
 type ImageProps = {
   id: string
@@ -11,31 +10,37 @@ type ImageProps = {
 
 type Props = {
   items: ImageProps[]
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: any) => void
   state: React.SetStateAction<number | undefined>
 }
 
-const RadioGroup = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-`
+const SIZE = 200
 
 const CircleRadioGroup = (props: Props) => {
   const { items, onChange, state } = props
   return (
-    <RadioGroup>
+    <RadioGroup
+      className="mb-5 grid grid-cols-3 gap-2"
+      value={state}
+      onChange={onChange}
+    >
       {items.map((v, i) => {
         return (
-          <li key={i}>
-            <CircleRadio
-              state={state}
-              onChange={onChange}
-              id={i}
-              image={v.image}
-              alt={v.name}
-            />
-          </li>
+          <>
+            <RadioGroup.Option className="mx-auto my-0" value={i}>
+              {({ checked }) => (
+                <Image
+                  className={`${
+                    checked ? 'bg-accent' : ''
+                  } rounded-full hover:cursor-pointer`}
+                  width={SIZE}
+                  height={SIZE}
+                  src={v.image}
+                  alt={v.name}
+                />
+              )}
+            </RadioGroup.Option>
+          </>
         )
       })}
     </RadioGroup>

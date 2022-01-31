@@ -3,7 +3,11 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialActions"]
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../graphql/generated/typegraphql-prisma"
 }
 
 datasource db {

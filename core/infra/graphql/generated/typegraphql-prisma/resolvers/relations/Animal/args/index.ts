@@ -1,0 +1,1 @@
+export { AnimalUserArgs } from "./AnimalUserArgs";
